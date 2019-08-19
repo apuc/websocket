@@ -20,3 +20,8 @@ class GetParamsDto:
             self.connection_type = params['connection_type'][0]
         else:
             self.connection_type = 'user'
+
+        if 'interlocutor_id' in params:
+            self.interlocutor_id = params['interlocutor_id'][0]
+        else:
+            self.interlocutor_id = None
