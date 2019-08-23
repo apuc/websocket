@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="widget">
+    <div class="user-list" id="user-list">
+        <div class="user-h">
+            <p>Contacts</p>
+        </div>
+        <ul class="users">
+            <li>
+                <p><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg" width="22px"
+                        class="ava"/> @martinyy</p>
+            </li>
+            <li>
+                <p><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg" width="22px"
+                        class="ava"/> @johndoe</p>
+            </li>
+            <li>
+                <p><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg" width="22px"
+                        class="ava"/> @jamesd</p>
+            </li>
+
+        </ul>
+        <div class="toolbar">
+            <button>add Contact</button>
+        </div>
+    </div>
+    <div class="chat">
+        <div class="header">
+            <p><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg" class="ava"/>John
+                Doe</p>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+                 y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;"
+                 xml:space="preserve">
+        <g id="Icons" style="opacity:0.75;">
+          <g id="close">
+            <polygon fill="#fff" id="x" style="fill-rule:evenodd;clip-rule:evenodd;"
+                     points="18.717,6.697 17.303,5.283 12,10.586 6.697,5.283    5.283,6.697 10.586,12 5.283,17.303 6.697,18.717 12,13.414 17.303,18.717 18.717,17.303 13.414,12   "/>
+          </g>
+        </g>
+                <g id="Guides" style="display:none;">
+        </g>
+      </svg>
+        </div>
+        <div class="content">
+            <ul id="chat-list">
+                <li>
+                    <b><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg"
+                            width="22px" class="ava"/> John Doe</b>
+                    <span class="text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</span>
+                </li>
+                <li class="me">
+                    <b>Max Mustermann <img
+                            src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg"
+                            width="22px" class="ava"/></b>
+                    <span class="text">tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span>
+                </li>
+                <li>
+                    <b><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg"
+                            width="22px" class="ava"/> John Doe</b>
+                    <span class="text"> Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit a</span>
+                </li>
+
+            </ul>
+        </div>
+        <div class="footer">
+            <div class="input-group">
+                <input id="text" class="left" type="text" value="Write something.."/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info flex grad">
+    <img class="app-icon" src="https://i.imgur.com/SZXokxA.png"/>
+    <div class="title">
+        <b>Chat App Design</b>
+        <br/>
+        <small>by @fritzchen</small>
+    </div>
+</div>
+<!-- partial -->
+<script src="./js/Form.js"></script>
+<script src="./js/script.js"></script>
+
+</body>
+</html>
