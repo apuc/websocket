@@ -1,47 +1,56 @@
 class Form {
 
-    paramsDefault = {
-        chatListId: 'chat-list',
-        userListId: 'user-list',
-        userList: true,
-        inputTextId: 'text',
-        currentUserName: 'Гость',
-        currentUserAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
-        beforeSend: function (msg) {
-
-        },
-        afterSend: function (msg) {
-
-        }
-    };
-
     constructor(params = {}) {
+        this.paramsDefault = {
+            chatListId: 'chat-list',
+            userListId: 'user-list',
+            interlocutorNameId: 'interlocutorName',
+            userList: true,
+            inputTextId: 'text',
+            currentUserName: 'Гость',
+            interlocutorUserName: 'Гость',
+            currentUserAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
+            beforeSend: function (msg) {
+
+            },
+            afterSend: function (msg) {
+
+            }
+        };
         this.params = this.merge(this.paramsDefault, params);
         this.chatList = this.ID(this.params.chatListId);
         this.userList = this.ID(this.params.userListId);
-        if(!this.params.userList){
+        this.interlocutorUserNameCont = this.ID(this.params.interlocutorNameId);
+        this.interlocutorUserNameCont.innerHTML = this.params.interlocutorUserName;
+        if (!this.params.userList) {
             this.userList.style.display = 'none';
         }
         this.inputText = this.ID(this.params.inputTextId);
         delete this.paramsDefault;
-        this.inputText.onkeydown = function(e) {
-            if (e.keyCode === 13){
+        this.inputText.onkeydown = function (e) {
+            if (e.keyCode === 13) {
                 this.onEnter();
             }
         }.bind(this);
     }
 
-    sendMessage(msg){
+    sendMessage(msg) {
         this.params.beforeSend(msg);
         this.updateUI(msg);
         this.params.afterSend(msg);
     }
 
-    onEnter(){
+    updateElement(key, value) {
+        this.params[key] = value;
+        let contName = key + 'Cont';
+        this[contName].innerHTML = value;
+    }
+
+    onEnter() {
         let txt = this.inputText.value;
         let msg = {
             me: true,
-            user: {
+            user: {
                 screen_name: this.params.currentUserName,
                 avatar: this.params.currentUserAvatar
             },
@@ -52,9 +61,9 @@ class Form {
         this.chatList.scrollTo(0, this.chatList.innerHeight);
     }
 
-    updateUI(data){
+    updateUI(data) {
         let wrap = document.createElement('li');
-        if(data.me){
+        if (data.me) {
             wrap.className = "me";
         }
         let title = document.createElement('b');
@@ -71,7 +80,7 @@ class Form {
         wrap.appendChild(title);
         wrap.appendChild(content);
         this.chatList.appendChild(wrap);
-        this.inputText.value="";
+        this.inputText.value = "";
     }
 
 
@@ -79,7 +88,7 @@ class Form {
         return document.getElementById(id);
     }
 
-    merge(target, source, errorHandler=null) {
+    merge(target, source, errorHandler = null) {
         let sourceKeys = [];
 
         if (!target || typeof target !== 'object') {

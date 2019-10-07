@@ -50,7 +50,17 @@
 // };
 
 let form = new Form({
-  test:123,
-  userList: false
+    test: 123,
+    currentUserName: 'admin',
+    interlocutorUserName: 'Kirill',
+    interlocutorNameId: 'iName',
+    beforeSend: function (msg) {
+        console.log(msg);
+    }
 });
+console.log(form);
+
+form.updateElement('interlocutorUserName', 'User');
+
+// test.renderText(test2, test);
 console.log(form);

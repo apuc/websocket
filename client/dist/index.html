@@ -4,6 +4,75 @@
     <meta charset="UTF-8">
     <title>Chat App</title>
     <link rel="stylesheet" href="./style.css">
+    <script>
+
+        function doConnect() {
+            websocket = new WebSocket("ws://localhost:5577/?user_id=123");
+            websocket.onopen = function (evt) {
+                onOpen(evt)
+            };
+            websocket.onclose = function (evt) {
+                onClose(evt)
+            };
+            websocket.onmessage = function (evt) {
+                onMessage(evt)
+            };
+            websocket.onerror = function (evt) {
+                onError(evt)
+            };
+        }
+
+        function onOpen(evt) {
+            writeToScreen("connected\n");
+        }
+
+        function onClose(evt) {
+            writeToScreen("disconnected\n");
+        }
+
+        function onMessage(evt) {
+            writeToScreen("response: " + evt.data + '\n');
+        }
+
+        function onError(evt) {
+            writeToScreen('error: ' + evt.data + '\n');
+
+            websocket.close();
+
+
+        }
+
+        function doSend(message) {
+            writeToScreen("sent: " + message + '\n');
+            websocket.send(message);
+        }
+
+        function writeToScreen(message) {
+           console.log(message);
+        }
+
+        window.addEventListener("load", doConnect, false);
+
+
+        function sendText() {
+            websocket.send()
+        }
+
+        function clearText() {
+
+        }
+
+        function doDisconnect() {
+            websocket.close();
+        }
+
+        function randomInteger(min, max) {
+            // случайное число от min до (max+1)
+            let rand = min + Math.random() * (max + 1 - min);
+            return Math.floor(rand);
+        }
+
+    </script>
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -33,8 +102,10 @@
     </div>
     <div class="chat">
         <div class="header">
-            <p><img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg" class="ava"/>John
-                Doe</p>
+            <p>
+                <img src="http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg" class="ava"/>
+                <span id="iName"></span>
+            </p>
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
                  y="0px" width="24px" height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;"
                  xml:space="preserve">
