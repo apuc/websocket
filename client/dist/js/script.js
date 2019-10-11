@@ -54,12 +54,20 @@ let form = new Form({
     currentUserName: 'admin',
     interlocutorUserName: 'Kirill',
     interlocutorNameId: 'iName',
+    members: [
+        {name: 'name1', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'},
+        {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'},
+        {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}
+    ],
     beforeSend: function (msg) {
         console.log(msg);
     }
 });
 console.log(form);
-
+form.addMember({name: 'name13', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'});
+form.addMember({name: 'name14', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'});
+form.deleteMember(3);
+console.log(form.params.members);
 form.updateElement('interlocutorUserName', 'User');
 
 // test.renderText(test2, test);
