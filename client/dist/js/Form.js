@@ -10,12 +10,31 @@ class Form {
             currentUserName: 'Гость',
             interlocutorUserName: 'Гость',
             currentUserAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
+            members: [],
+            membersId: 'members',
+            messages: [],
             beforeSend: function (msg) {
 
             },
             afterSend: function (msg) {
 
+            },
+            beforeAddMember: function (member) {
+
+            },
+            afterAddMember: function (member) {
+
+            },
+            beforeDeleteMember: function (id) {
+
+            },
+            afterDeleteMember: function (id) {
+
+            },
+            onClose: function () {
+
             }
+
         };
         this.params = this.merge(this.paramsDefault, params);
         this.chatList = this.ID(this.params.chatListId);
@@ -25,8 +44,16 @@ class Form {
         if (!this.params.userList) {
             this.userList.style.display = 'none';
         }
+        this.updateMembersUI();
         this.inputText = this.ID(this.params.inputTextId);
+        for (let i = 0; i < this.params.messages.length; i++){
+            this.updateUI(this.params.messages[i]);
+        }
         delete this.paramsDefault;
+        this.ID('close').onclick=function (e) {
+            this.onClose();
+            document.getElementsByClassName('widget')[0].style.display = 'none';
+        };
         this.inputText.onkeydown = function (e) {
             if (e.keyCode === 13) {
                 this.onEnter();
@@ -59,6 +86,50 @@ class Form {
         console.log(msg);
         this.sendMessage(msg);
         this.chatList.scrollTo(0, this.chatList.innerHeight);
+    }
+
+    //deletes member and updates html
+    deleteMember(id) {
+        this.params.beforeDeleteMember(id);
+        for (let i = 0; i < this.params.members.length; i++){
+            if(this.params.members[i].id === id){
+                this.params.members.splice(i, 1);
+            }
+        }
+        this.updateMembersUI();
+        console.log(this);
+        this.params.afterDeleteMember(id);
+    }
+
+    //adds a new member and updates html
+    addMember(member) {
+        this.params.beforeAddMember(member);
+        this.params.members.push(member);
+        this.updateMembersUI();
+        this.params.afterAddMember(member);
+    }
+
+    //clears members block and refill it
+    updateMembersUI() {
+        let members = document.getElementById(this.params.membersId);
+        members.innerHTML="";
+        for (let i = 0; i < this.params.members.length; i++){
+            let userLi = document.createElement('li');
+            let userP = document.createElement('p');
+            let userImg = document.createElement('img');
+            let button = document.createElement('button');
+            button.className = "delete-button";
+            button.setAttribute('data-id', this.params.members[i].id);
+            button.onclick = function(e){this.deleteMember(this.params.members[i].id)}.bind(this);
+            userImg.src=this.params.members[i].avatar;
+            userImg.className = "ava";
+            userImg.width = 22;
+            members.appendChild(userLi);
+            userLi.appendChild(userP);
+            userLi.appendChild(button);
+            userP.appendChild(userImg);
+            userP.innerHTML+=" @"+this.params.members[i].name;
+        }
     }
 
     updateUI(data) {
@@ -132,7 +203,7 @@ class Form {
                     target[key] = [];
                 }
 
-                merge(target[key], source[key], errorHandler);
+                this.merge(target[key], source[key], errorHandler);
             } else {
                 // Objects
 
@@ -140,7 +211,7 @@ class Form {
                     target[key] = {};
                 }
 
-                merge(target[key], source[key], errorHandler);
+                this.merge(target[key], source[key], errorHandler);
             }
         }
 
