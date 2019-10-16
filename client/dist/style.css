@@ -30,7 +30,7 @@ body{
 .widget{
   display: flex;
   overflow: hidden;
-  width: 40em;
+  width: 60em;
   margin: 30px auto;
   -webkit-box-shadow: 0px 0px 58px 0px rgba(0,0,0,0.35);
 -moz-box-shadow: 0px 0px 58px 0px rgba(0,0,0,0.35);
