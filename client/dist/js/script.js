@@ -55,20 +55,18 @@ let form = new Form({
     interlocutorUserName: 'Kirill',
     interlocutorNameId: 'iName',
     members: [
-        {name: 'name1', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'},
-        {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'},
-        {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}
+        {name: 'name1', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1},
+        {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 2},
+        {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 3}
+    ],
+    messages: [
+        {me: true, text: 'first test message', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
+        {me: false, text: 'second test message', user: {screen_name: 'Пользователь', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
+        {me: false, text: 'third test message', user: {screen_name: 'Пользователь', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
+        {me: true, text: 'fourth test message', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
     ],
     beforeSend: function (msg) {
         console.log(msg);
     }
 });
-console.log(form);
-form.addMember({name: 'name13', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'});
-form.addMember({name: 'name14', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'});
-form.deleteMember(3);
-console.log(form.params.members);
-form.updateElement('interlocutorUserName', 'User');
-
-// test.renderText(test2, test);
 console.log(form);

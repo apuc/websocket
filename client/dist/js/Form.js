@@ -12,6 +12,7 @@ class Form {
             currentUserAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
             members: [],
             membersId: 'members',
+            messages: [],
             beforeSend: function (msg) {
 
             },
@@ -29,6 +30,9 @@ class Form {
             },
             afterDeleteMember: function (id) {
 
+            },
+            onClose: function () {
+
             }
 
         };
@@ -40,11 +44,16 @@ class Form {
         if (!this.params.userList) {
             this.userList.style.display = 'none';
         }
-        for (let i = 0; i<this.params.members.length; i++){
-            this.addMember(this.params.members[i], i);
-        }
+        this.updateMembersUI();
         this.inputText = this.ID(this.params.inputTextId);
+        for (let i = 0; i < this.params.messages.length; i++){
+            this.updateUI(this.params.messages[i]);
+        }
         delete this.paramsDefault;
+        this.ID('close').onclick=function (e) {
+            this.onClose();
+            document.getElementsByClassName('widget')[0].style.display = 'none';
+        };
         this.inputText.onkeydown = function (e) {
             if (e.keyCode === 13) {
                 this.onEnter();
@@ -79,59 +88,48 @@ class Form {
         this.chatList.scrollTo(0, this.chatList.innerHeight);
     }
 
+    //deletes member and updates html
     deleteMember(id) {
         this.params.beforeDeleteMember(id);
-        let members = document.getElementById(this.params.membersId);
-        let member = members.querySelector('li[data-id="'+id+'"]');
-        this.params.members.splice(id, 1);
-        member.remove();
-
-        // refresh members DOM
         for (let i = 0; i < this.params.members.length; i++){
-            this.addMember(this.params.members[i], i);
+            if(this.params.members[i].id === id){
+                this.params.members.splice(i, 1);
+            }
         }
-        let member_test = members.querySelector('li[data-id="'+(id+1)+'"]');
-        member_test.remove();
+        this.updateMembersUI();
+        console.log(this);
         this.params.afterDeleteMember(id);
     }
 
-    addMember(member, id=null) {
+    //adds a new member and updates html
+    addMember(member) {
         this.params.beforeAddMember(member);
-        let users = document.getElementById(this.params.membersId);
-
-        // if id is NULL set it to array next element
-        if(id===null)
-            id = this.params.members.length.toString();
-
-        // try to find chat member with data-id=id in DOM
-        let userLi=users.querySelector('li[data-id="'+id+'"]');
-
-        // if didn't find any - create a new one
-        if(!userLi)
-            userLi = document.createElement('li');
-        // if did find one - clear it
-        else
-            userLi.innerHTML="";
-
-        userLi.setAttribute('data-id', id);
-
-        // push an element into members array
-        if(id >= this.params.members.length)
-            this.params.members.push(member);
-        // or changing an existing one
-        else
-            this.params.members[id]=member;
-
-        let userP = document.createElement('p');
-        let userImg = document.createElement('img');
-        userImg.src=member.avatar;
-        userImg.className = "ava";
-        userImg.width = 22;
-        users.appendChild(userLi);
-        userLi.appendChild(userP);
-        userP.appendChild(userImg);
-        userP.innerHTML+=" @"+member.name;
+        this.params.members.push(member);
+        this.updateMembersUI();
         this.params.afterAddMember(member);
+    }
+
+    //clears members block and refill it
+    updateMembersUI() {
+        let members = document.getElementById(this.params.membersId);
+        members.innerHTML="";
+        for (let i = 0; i < this.params.members.length; i++){
+            let userLi = document.createElement('li');
+            let userP = document.createElement('p');
+            let userImg = document.createElement('img');
+            let button = document.createElement('button');
+            button.className = "delete-button";
+            button.setAttribute('data-id', this.params.members[i].id);
+            button.onclick = function(e){this.deleteMember(this.params.members[i].id)}.bind(this);
+            userImg.src=this.params.members[i].avatar;
+            userImg.className = "ava";
+            userImg.width = 22;
+            members.appendChild(userLi);
+            userLi.appendChild(userP);
+            userLi.appendChild(button);
+            userP.appendChild(userImg);
+            userP.innerHTML+=" @"+this.params.members[i].name;
+        }
     }
 
     updateUI(data) {
