@@ -50,12 +50,10 @@
 // };
 
 let form = new Form({
-    test: 123,
     currentUserName: 'admin',
-    interlocutorUserName: 'Kirill',
     interlocutorNameId: 'iName',
     members: [
-        {name: 'name1', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1},
+        {name: 'Леша', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1},
         {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 2},
         {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 3}
     ],
@@ -66,7 +64,28 @@ let form = new Form({
         {me: true, text: 'fourth test message', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
     ],
     beforeSend: function (msg) {
-        console.log(msg);
+        socketChat.send(msg);
+        console.log(socketChat);
+    },
+    contactList: [
+        {'userNema': 'dfdf', 'userId': 24, 'avatar': 'url'}
+    ]
+});
+
+form.addMember({name: 'Вася', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1});
+console.log(form);
+
+let socketChat = new SocketChat({
+    request: 'user_id=123&chat_id=321',
+    onError: function (evt) {
+        console.log(evt);
+    },
+    onOpen: function (evt) {
+        form.updateElement('interlocutorUserName', 'Вася');
+        console.log('Ура', evt);
     }
 });
-console.log(form);
+
+// form.updateElement('interlocutorUserName', 'User');
+
+// test.renderText(test2, test);
