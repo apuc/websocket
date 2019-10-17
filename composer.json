@@ -9,6 +9,6 @@
             "email": "apuc06@mail.ru"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {}
 }
