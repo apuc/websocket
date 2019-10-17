@@ -53,9 +53,9 @@ let form = new Form({
     currentUserName: 'admin',
     interlocutorNameId: 'iName',
     members: [
-        {name: 'Леша', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1},
-        {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 2},
-        {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 3}
+        {name: '1', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1},
+        {name: '2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 2},
+        {name: '3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 3}
     ],
     messages: [
         {me: true, text: 'first test message', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
@@ -69,10 +69,17 @@ let form = new Form({
     },
     contactList: [
         {'userNema': 'dfdf', 'userId': 24, 'avatar': 'url'}
-    ]
+    ],
+    getMessagesForDialog: function (dialogId) {
+        return [{me: false, text: 'safsadfsdafgxfagafg', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
+            {me: false, text: 'fgxdgdxgdfxgfx', user: {screen_name: 'Пользователь', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
+            {me: false, text: 'xgdfgdagdfag', user: {screen_name: 'Пользователь', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
+            {me: true, text: 'gdfgbvbcxbvcvbvc', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}}];
+    }
 });
 
-form.addMember({name: 'Вася', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1});
+form.addMember({name: '4', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 4});
+form.positionDialogOnTop(2);
 console.log(form);
 
 let socketChat = new SocketChat({
