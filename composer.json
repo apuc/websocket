@@ -1,0 +1,14 @@
+{
+    "name": "apuc/websocket",
+    "description": "chat extention",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kavalar",
+            "email": "apuc06@mail.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
