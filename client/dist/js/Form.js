@@ -84,7 +84,6 @@ class Form extends BaseObj{
             },
             text: txt
         };
-        console.log(msg);
         this.sendMessage(msg);
         this.chatList.scrollTo(0, this.chatList.innerHeight);
     }

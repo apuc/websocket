@@ -10,7 +10,7 @@ class SimpleChat(WebSocket):
     def handleMessage(self):
         for client in clients:
             if client != self:
-                client.sendMessage(self.address[0] + u' - ' + self.data)
+                client.sendMessage(self.data)
         # server.close()
 
     def handleConnected(self):
@@ -19,14 +19,16 @@ class SimpleChat(WebSocket):
         self.get_params = GetParamsDto(get_params)
         print(self.get_params.__dict__)
         for client in clients:
-            client.sendMessage(self.address[0] + u' - connected')
+            if client != self:
+                client.sendMessage(self.address[0] + u' - connected')
         clients.append(self)
 
     def handleClose(self):
         clients.remove(self)
         print(self.address, 'closed')
         for client in clients:
-            client.sendMessage(self.address[0] + u' - disconnected')
+            if client != self:
+                client.sendMessage(self.address[0] + u' - disconnected')
 
 
 server = SimpleWebSocketServer('', 5577, SimpleChat)

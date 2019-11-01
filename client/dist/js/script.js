@@ -64,8 +64,7 @@ let form = new Form({
         {me: true, text: 'fourth test message', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
     ],
     beforeSend: function (msg) {
-        socketChat.send(msg);
-        console.log(socketChat);
+        socketChat.send(msg.text);
     },
     contactList: [
         {'userNema': 'dfdf', 'userId': 24, 'avatar': 'url'}
@@ -73,16 +72,19 @@ let form = new Form({
 });
 
 form.addMember({name: 'Вася', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1});
-console.log(form);
 
 let socketChat = new SocketChat({
     request: 'user_id=123&chat_id=321',
     onError: function (evt) {
-        console.log(evt);
+        console.log('Ошибка', evt);
     },
     onOpen: function (evt) {
         form.updateElement('interlocutorUserName', 'Вася');
         console.log('Ура', evt);
+    },
+    onMessage: function (evt) {
+        console.log(evt.data);
+        // form.sendMessage({me: false, text: evt.data, user: {screen_name: form.params.interlocutorUserName, avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},)
     }
 });
 
