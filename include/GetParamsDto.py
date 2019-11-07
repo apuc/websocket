@@ -1,6 +1,9 @@
 class GetParamsDto:
 
     def __init__(self, params):
+        self.set_params(params)
+
+    def set_params(self, params):
         if 'user_id' in params:
             self.user_id = params['user_id'][0]
         else:
