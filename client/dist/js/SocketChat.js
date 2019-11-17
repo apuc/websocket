@@ -2,6 +2,12 @@ class SocketChat extends BaseObj {
 
     constructor(params = {}) {
         super();
+        if (Object.keys(params).length !== 0) {
+            this.init(params)
+        }
+    }
+
+    init(params = {}){
         this.paramsDefault = {
             host: 'ws://localhost:5577',
             request: '',

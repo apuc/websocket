@@ -1,7 +1,13 @@
-class Form extends BaseObj{
+class Form extends BaseObj {
 
     constructor(params = {}) {
         super();
+        if (Object.keys(params).length !== 0) {
+            this.init(params)
+        }
+    }
+
+    init(params = {}) {
         this.paramsDefault = {
             chatListId: 'chat-list',
             userListId: 'user-list',
@@ -47,11 +53,11 @@ class Form extends BaseObj{
         }
         this.updateMembersUI();
         this.inputText = this.ID(this.params.inputTextId);
-        for (let i = 0; i < this.params.messages.length; i++){
+        for (let i = 0; i < this.params.messages.length; i++) {
             this.updateUI(this.params.messages[i]);
         }
         delete this.paramsDefault;
-        this.ID('close').onclick=function (e) {
+        this.ID('close').onclick = function (e) {
             this.onClose();
             document.getElementsByClassName('widget')[0].style.display = 'none';
         };
@@ -86,13 +92,18 @@ class Form extends BaseObj{
         };
         this.sendMessage(msg);
         this.chatList.scrollTo(0, this.chatList.innerHeight);
+        this.onSendToServer(msg);
+    }
+
+    onSendToServer(msg) {
+
     }
 
     //deletes member and updates html
     deleteMember(id) {
         this.params.beforeDeleteMember(id);
-        for (let i = 0; i < this.params.members.length; i++){
-            if(this.params.members[i].id === id){
+        for (let i = 0; i < this.params.members.length; i++) {
+            if (this.params.members[i].id === id) {
                 this.params.members.splice(i, 1);
             }
         }
@@ -112,23 +123,25 @@ class Form extends BaseObj{
     //clears members block and refill it
     updateMembersUI() {
         let members = document.getElementById(this.params.membersId);
-        members.innerHTML="";
-        for (let i = 0; i < this.params.members.length; i++){
+        members.innerHTML = "";
+        for (let i = 0; i < this.params.members.length; i++) {
             let userLi = document.createElement('li');
             let userP = document.createElement('p');
             let userImg = document.createElement('img');
             let button = document.createElement('button');
             button.className = "delete-button";
             button.setAttribute('data-id', this.params.members[i].id);
-            button.onclick = function(e){this.deleteMember(this.params.members[i].id)}.bind(this);
-            userImg.src=this.params.members[i].avatar;
+            button.onclick = function (e) {
+                this.deleteMember(this.params.members[i].id)
+            }.bind(this);
+            userImg.src = this.params.members[i].avatar;
             userImg.className = "ava";
             userImg.width = 22;
             members.appendChild(userLi);
             userLi.appendChild(userP);
             userLi.appendChild(button);
             userP.appendChild(userImg);
-            userP.innerHTML+=" @"+this.params.members[i].name;
+            userP.innerHTML += " @" + this.params.members[i].name;
         }
     }
 

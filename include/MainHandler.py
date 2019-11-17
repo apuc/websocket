@@ -25,7 +25,7 @@ class MainHandler:
         else:
             clients = self.getClientsByFilter(filters)
         for user in clients:
-            if user != self:
+            if user != client:
                 resp = {}
                 for key in params:
                     resp.update({key: params[key]})

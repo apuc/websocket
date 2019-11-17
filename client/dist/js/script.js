@@ -49,7 +49,13 @@
 //     }
 // };
 
-let form = new Form({
+let app = new App();
+app.chatId = 123;
+app.interlocutorId = 444;
+app.importComponent('socket', new SocketChat());
+app.importComponent('form', new Form());
+
+app.form.init({
     currentUserName: 'admin',
     interlocutorNameId: 'iName',
     members: [
@@ -62,24 +68,17 @@ let form = new Form({
         {me: false, text: 'second test message', user: {screen_name: 'Пользователь', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
         {me: false, text: 'third test message', user: {screen_name: 'Пользователь', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
         {me: true, text: 'fourth test message', user: {screen_name: 'Гость', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},
-    ],
-    beforeSend: function (msg) {
-        socketChat.send(msg.text);
-    },
-    contactList: [
-        {'userNema': 'dfdf', 'userId': 24, 'avatar': 'url'}
     ]
 });
 
-form.addMember({name: 'Вася', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1});
+app.form.addMember({name: 'Вася', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1});
 
-let socketChat = new SocketChat({
-    request: 'user_id=123&chat_id=321',
+app.socket.init({
+    request: 'user_id=123',
     onError: function (evt) {
         console.log('Ошибка', evt);
     },
     onOpen: function (evt) {
-        form.updateElement('interlocutorUserName', 'Вася');
         console.log('Ура', evt);
     },
     onMessage: function (evt) {
@@ -87,6 +86,8 @@ let socketChat = new SocketChat({
         // form.sendMessage({me: false, text: evt.data, user: {screen_name: form.params.interlocutorUserName, avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},)
     }
 });
+
+app.run();
 
 // form.updateElement('interlocutorUserName', 'User');
 
