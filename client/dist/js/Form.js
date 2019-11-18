@@ -16,6 +16,7 @@ class Form extends BaseObj {
             inputTextId: 'text',
             currentUserName: 'Гость',
             interlocutorUserName: 'Гость',
+            interlocutorAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
             currentUserAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
             members: [],
             membersId: 'members',
@@ -72,6 +73,7 @@ class Form extends BaseObj {
         this.params.beforeSend(msg);
         this.updateUI(msg);
         this.params.afterSend(msg);
+        this.chatList.scrollTo(0, this.chatList.innerHeight);
     }
 
     updateElement(key, value) {
@@ -91,7 +93,6 @@ class Form extends BaseObj {
             text: txt
         };
         this.sendMessage(msg);
-        this.chatList.scrollTo(0, this.chatList.innerHeight);
         this.onSendToServer(msg);
     }
 
@@ -118,6 +119,23 @@ class Form extends BaseObj {
         this.params.members.push(member);
         this.updateMembersUI();
         this.params.afterAddMember(member);
+    }
+
+    getMemberById(id) {
+        for (let i = 0; i < this.params.members.length; i++) {
+            if (this.params.members[i].id == id) {
+                return this.params.members[i];
+            }
+        }
+
+        return null;
+    }
+
+    getInterlocutor() {
+        return {
+            name: this.params.interlocutorUserName,
+            avatar: this.params.interlocutorAvatar
+        };
     }
 
     //clears members block and refill it

@@ -30,7 +30,21 @@ class App extends BaseObj {
     }
 
     onMessage(evt) {
-        console.log('on message app');
+        // console.log('on message app', evt.data);
+        let msg = JSON.parse(evt.data);
+        let member = this.form.getInterlocutor();
+        if(msg.user_id == this.interlocutorId || msg.chat_id == this.chatId){
+            let formMsg = {
+                me: false,
+                user: {
+                    screen_name: member.name,
+                    avatar: member.avatar
+                },
+                text: msg.text
+            };
+            this.form.sendMessage(formMsg);
+        }
+        console.log(member);
     }
 
     onOpen(evt) {

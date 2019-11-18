@@ -50,16 +50,17 @@
 // };
 
 let app = new App();
-app.chatId = 123;
-app.interlocutorId = 444;
+app.chatId = 444;
+app.interlocutorId = 123;
 app.importComponent('socket', new SocketChat());
 app.importComponent('form', new Form());
 
 app.form.init({
     currentUserName: 'admin',
+    interlocutorUserName: 'user',
     interlocutorNameId: 'iName',
     members: [
-        {name: 'Леша', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1},
+        {name: 'Леша', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 123},
         {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 2},
         {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 3}
     ],
@@ -74,17 +75,7 @@ app.form.init({
 app.form.addMember({name: 'Вася', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 1});
 
 app.socket.init({
-    request: 'user_id=123',
-    onError: function (evt) {
-        console.log('Ошибка', evt);
-    },
-    onOpen: function (evt) {
-        console.log('Ура', evt);
-    },
-    onMessage: function (evt) {
-        console.log(evt.data);
-        // form.sendMessage({me: false, text: evt.data, user: {screen_name: form.params.interlocutorUserName, avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg'}},)
-    }
+    request: 'user_id=124',
 });
 
 app.run();
