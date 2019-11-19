@@ -41,6 +41,9 @@ class Form extends BaseObj {
             },
             onClose: function () {
 
+            },
+            getMessagesForDialog: function (dialogId) {
+
             }
 
         };
@@ -54,9 +57,7 @@ class Form extends BaseObj {
         }
         this.updateMembersUI();
         this.inputText = this.ID(this.params.inputTextId);
-        for (let i = 0; i < this.params.messages.length; i++) {
-            this.updateUI(this.params.messages[i]);
-        }
+        this.updateMessages();
         delete this.paramsDefault;
         this.ID('close').onclick = function (e) {
             this.onClose();
@@ -147,6 +148,9 @@ class Form extends BaseObj {
             let userP = document.createElement('p');
             let userImg = document.createElement('img');
             let button = document.createElement('button');
+            userLi.onclick = function(e) {
+                this.changeDialog(arguments[0])
+            }.bind(this, this.params.members[i]);
             button.className = "delete-button";
             button.setAttribute('data-id', this.params.members[i].id);
             button.onclick = function (e) {
@@ -161,6 +165,31 @@ class Form extends BaseObj {
             userP.appendChild(userImg);
             userP.innerHTML += " @" + this.params.members[i].name;
         }
+    }
+
+    changeDialog(dialog) {
+        this.params.messages = this.params.getMessagesForDialog(dialog.id);
+        this.ID(this.params.interlocutorNameId).innerText=dialog.name;
+        this.updateMessages();
+    }
+
+    updateMessages() {
+        this.ID('chat-list').innerHTML='';
+        for (let i = 0; i < this.params.messages.length; i++){
+            this.updateUI(this.params.messages[i]);
+        }
+    }
+
+    positionDialogOnTop(dialogID) {
+        for (let i = 0; i < this.params.members.length; i++) {
+            if(this.params.members[i].id === dialogID){
+                let tmp = this.params.members[i];
+                this.params.members.splice(i, 1);
+                this.params.members.unshift(tmp);
+                break;
+            }
+        }
+        this.updateMembersUI();
     }
 
     updateUI(data) {
