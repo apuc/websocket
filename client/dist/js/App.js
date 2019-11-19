@@ -23,6 +23,7 @@ class App extends BaseObj {
 
         if (this.form) {
             this.form.onSendToServer = this.onEnter.bind(this);
+            this.form.onChatChange = this.onChatChange.bind(this);
         }
         else {
             console.error('No form class');
@@ -68,7 +69,13 @@ class App extends BaseObj {
 
     onEnter(msg) {
         this.socket.ws.send(JSON.stringify({type: 'msg', text: msg.text}));
-        console.log(msg);
+    }
+
+    onChatChange(chat){
+        if(chat.id){
+            this.interlocutorId = chat.id;
+            this.socket.ws.send(JSON.stringify({type: 'setParam', key: 'interlocutor_id', 'value': this.interlocutorId}));
+        }
     }
 
 }

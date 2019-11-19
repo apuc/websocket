@@ -15,6 +15,7 @@ class Form extends BaseObj {
             userList: true,
             inputTextId: 'text',
             currentUserName: 'Гость',
+            interlocutorId: 1,
             interlocutorUserName: 'Гость',
             interlocutorAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
             currentUserAvatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg',
@@ -134,9 +135,22 @@ class Form extends BaseObj {
 
     getInterlocutor() {
         return {
+            id: this.params.interlocutorId,
             name: this.params.interlocutorUserName,
             avatar: this.params.interlocutorAvatar
         };
+    }
+
+    setInterlocutor(data) {
+        if (data.id) {
+            this.params.interlocutorId = data.id;
+        }
+        if (data.name) {
+            this.params.interlocutorUserName = data.name;
+        }
+        if (data.avatar) {
+            this.params.interlocutorAvatar = data.avatar;
+        }
     }
 
     //clears members block and refill it
@@ -148,7 +162,7 @@ class Form extends BaseObj {
             let userP = document.createElement('p');
             let userImg = document.createElement('img');
             let button = document.createElement('button');
-            userLi.onclick = function(e) {
+            userLi.onclick = function (e) {
                 this.changeDialog(arguments[0])
             }.bind(this, this.params.members[i]);
             button.className = "delete-button";
@@ -169,20 +183,26 @@ class Form extends BaseObj {
 
     changeDialog(dialog) {
         this.params.messages = this.params.getMessagesForDialog(dialog.id);
-        this.ID(this.params.interlocutorNameId).innerText=dialog.name;
+        this.ID(this.params.interlocutorNameId).innerText = dialog.name;
+        this.setInterlocutor(dialog);
         this.updateMessages();
+        this.onChatChange(dialog);
+    }
+
+    onChatChange(chat) {
+
     }
 
     updateMessages() {
-        this.ID('chat-list').innerHTML='';
-        for (let i = 0; i < this.params.messages.length; i++){
+        this.ID('chat-list').innerHTML = '';
+        for (let i = 0; i < this.params.messages.length; i++) {
             this.updateUI(this.params.messages[i]);
         }
     }
 
     positionDialogOnTop(dialogID) {
         for (let i = 0; i < this.params.members.length; i++) {
-            if(this.params.members[i].id === dialogID){
+            if (this.params.members[i].id === dialogID) {
                 let tmp = this.params.members[i];
                 this.params.members.splice(i, 1);
                 this.params.members.unshift(tmp);
