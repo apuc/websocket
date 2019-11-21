@@ -75,7 +75,7 @@ class Form extends BaseObj {
         this.params.beforeSend(msg);
         this.updateUI(msg);
         this.params.afterSend(msg);
-        this.chatList.scrollTo(0, this.chatList.innerHeight);
+        this.chatList.scrollTo(0, this.chatList.scrollHeight);
     }
 
     updateElement(key, value) {

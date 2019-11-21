@@ -9,6 +9,11 @@ class GetParamsDto:
         else:
             self.user_id = None
 
+        if 'user_name' in params:
+            self.user_name = params['user_name'][0]
+        else:
+            self.user_name = None
+
         if 'chat_id' in params:
             self.chat_id = params['chat_id'][0]
         else:

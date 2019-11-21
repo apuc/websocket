@@ -60,7 +60,7 @@ app.form.init({
     interlocutorUserName: 'user',
     interlocutorNameId: 'iName',
     members: [
-        {name: 'Леша', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 123},
+        {name: 'Леша', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 124},
         {name: 'name2', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 2},
         {name: 'name3', avatar: 'http://diggwithme.files.wordpress.com/2012/09/new-default-twitter-avatar.jpg', id: 3}
     ],
@@ -80,7 +80,7 @@ app.form.init({
 
 
 app.socket.init({
-    request: 'user_id=124',
+    request: 'user_id=123',
 });
 
 app.run();
